@@ -47,7 +47,6 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
     public void onLocationChange(Location location) {
         if (m_bTrackingMode) {
             tMapView.setLocationPoint(location.getLongitude(), location.getLatitude());
-            TMapPoint tp = new TMapPoint(location.getLongitude(), location.getLatitude());
             //얘는 덕수궁 이 근처 default 위치.
         }
     }
@@ -61,7 +60,6 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         //선언
         mapView = new LinearLayout(this);
         tMapView = new TMapView(this);
-
         //세팅
         tMapView.setSKTMapApiKey(apiKey); //발급받은 api 키
 
@@ -69,26 +67,20 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
         showMarkerPoint();
         tMapView.setCompassMode(true);
         tMapView.setIconVisibility(true);
-        tMapView.setZoomLevel(15);
+        tMapView.setZoomLevel(17);
         tMapView.setMapType(TMapView.MAPTYPE_STANDARD);
         tMapView.setLanguage(TMapView.LANGUAGE_KOREAN);
         mapView.addView(tMapView);
         setContentView(mapView);
         tmapgps = new TMapGpsManager(this);
-        tmapgps.setMinTime(1000);
-        tmapgps.setMinDistance(0);
+        tmapgps.setMinTime(10);
+        tmapgps.setMinDistance(5);
         tmapgps.setProvider(tmapgps.NETWORK_PROVIDER);//연결된 인터넷으로 현 위치를 받는다.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1); //위치권한 탐색 허용 관련 내용
         }
         tmapgps.OpenGps();
         tMapView.setTrackingMode(true);
-        tMapView.setSightVisible(true);
-
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         LocationListener locationListener = new LocationListener() {
             @Override
@@ -100,9 +92,7 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
 
                 TMapPoint tp = new TMapPoint(latitude, longitude);
 
-                Log.d("테스트", tp.toString());
-                tMapView.setTrackingMode(true);
-
+                Log.d("테스트",tp.toString());
             }
 
             @Override
@@ -131,10 +121,10 @@ public class TmapActivity extends AppCompatActivity implements TMapGpsManager.on
             // for Activity#requestPermissions for more details.
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 0, locationListener);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10, 0, locationListener);
+        //갱신하는 초를 설정해도 어쩔때는 1초에 한번..어쩔떄는 20초에 한번.. 큰 의미는 없는 것 같다.. 하지만 움직임이 클 때는 갱신되는 게 더 힘들어 하는 것 같다.
     }
-
 
     public void addPoint()
     {
