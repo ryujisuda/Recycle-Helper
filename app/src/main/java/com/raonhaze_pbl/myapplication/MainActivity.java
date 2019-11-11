@@ -24,10 +24,14 @@ import org.w3c.dom.Text;
 public class MainActivity extends AppCompatActivity {
     private Button qr_button,notice_button,map_button;
     private IntentIntegrator qrScan;
+    Intent intent;
+    public String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        intent=getIntent();
+        userID=intent.getStringExtra("userID");
         qr_button =findViewById(R.id.Button_click);
         qrScan = new IntentIntegrator(this);
         // qrScan.setCaptureActivity(MainActivity.class);
@@ -68,10 +72,8 @@ public class MainActivity extends AppCompatActivity {
         if (result != null) {
             //qrcode 가 없으면
             if (result.getContents() == null) {
-                Toast.makeText(MainActivity.this, "취소!", Toast.LENGTH_SHORT).show();
             } else {
                 //qrcode 결과가 있으면
-                Toast.makeText(MainActivity.this, "스캔완료!", Toast.LENGTH_SHORT).show();
                 try {
                     //data를 json으로 변환
                     JSONObject obj = new JSONObject(result.getContents());
@@ -80,18 +82,22 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
 
                     Intent intent =  getIntent();
-                    String userID = intent.getStringExtra("userID");
 
-                    String userBarcode = result.getContents();
+                    final String userBarcode = result.getContents();
+
+
+                    Toast.makeText(getApplicationContext(),userID+""+userBarcode,Toast.LENGTH_SHORT).show();
+
+
                     Response.Listener<String> responseListener = new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             //여기서 부터 json object를 활용한다. json object는 string 형태.. 담아서 보내는 운반체라고 생각하면 된다.
                             try {
 
+                                //Toast.makeText(getApplicationContext(),userID+""+userBarcode,Toast.LENGTH_SHORT).show();
                                 JSONObject jsonObject = new JSONObject(response);
                                 Boolean success = jsonObject.getBoolean("success");//success를 가지고 와야해 true냐?->성공 false냐?->실패
-                                Log.d("테스트트",success+"");
                                 if(success)//회원등록에 성공한 경우
                                 {
                                     Toast.makeText(getApplicationContext(),"전송이 완료되었습니다.",Toast.LENGTH_SHORT).show();

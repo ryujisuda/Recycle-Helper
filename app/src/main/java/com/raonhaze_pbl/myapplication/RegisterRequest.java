@@ -13,7 +13,7 @@ public class RegisterRequest extends StringRequest {
     final static private String URL = "http://raonbin.cf/Register.php";//Register.php 파일과 연결하는 과정
     private Map<String,String> map;
 
-    public RegisterRequest(String userID, String userPassword, String userName, String userPhone,  String userBarcode, Response.Listener<String> listener)
+    public RegisterRequest(String userID, String userPassword, String userName, String userPhone,   Response.Listener<String> listener)
     {
         super(Method.POST,URL,listener,null);
 
@@ -22,7 +22,6 @@ public class RegisterRequest extends StringRequest {
         map.put("userPassword",userPassword);
         map.put("userName",userName);
         map.put("userPhone",userPhone);
-        map.put("userBarcode",userBarcode);
 
     }
     @Override

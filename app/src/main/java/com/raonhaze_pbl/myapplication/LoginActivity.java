@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
+    public String userID;
     private EditText et_id,et_pass;
     private Button btn_login,btn_register;
     @Override
@@ -43,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                String userID = et_id.getText().toString();
+                userID= et_id.getText().toString();
                 String userPass = et_pass.getText().toString();
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -59,10 +60,8 @@ public class LoginActivity extends AppCompatActivity {
 
                                 Toast.makeText(getApplicationContext(),"로그인에 성공하였습니다.",Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                                startActivity(intent);
-
                                 intent.putExtra("userID",userID);
-                                intent.putExtra("userPassword",userPass);
+                                startActivity(intent);
 
                             }
                             else //회원등록에 실패한 경우
