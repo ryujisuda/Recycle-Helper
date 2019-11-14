@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private IntentIntegrator qrScan;
     Intent intent;
     public String userID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
