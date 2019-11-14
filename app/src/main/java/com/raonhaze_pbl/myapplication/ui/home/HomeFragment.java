@@ -1,5 +1,6 @@
 package com.raonhaze_pbl.myapplication.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.raonhaze_pbl.myapplication.R;
+import com.raonhaze_pbl.myapplication.ui.gallery.mytrashbag;
 
 public class HomeFragment extends Fragment {
 
@@ -23,13 +25,15 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
+       /* final TextView textView = root.findViewById(R.id.text_home);
         homeViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
-        });
+        });*/
+        //Intent intent1 = new Intent(getActivity(), Real_Main.class);
+        //startActivity(intent1);
         return root;
     }
 }
