@@ -10,9 +10,5 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Home</string>
-    <string name="menu_slideshow">Home</string>
-    <string name="menu_tools">Home</string>
-    <string name="menu_share">Home</string>
-    <string name="menu_send">Home</string>
-    <string name="menu_gallery2">Gallery</string>
+    <string name="menu_gallery2">Search</string>
 </resources>

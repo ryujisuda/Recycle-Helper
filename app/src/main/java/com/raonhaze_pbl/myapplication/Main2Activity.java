@@ -1,7 +1,9 @@
 package com.raonhaze_pbl.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.android.volley.RequestQueue;
@@ -14,6 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -22,6 +26,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.raonhaze_pbl.myapplication.ui.gallery.GalleryFragment;
+import com.raonhaze_pbl.myapplication.ui.gallery.mytrashbag;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -31,6 +37,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Gallery;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,11 +46,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 public class Main2Activity extends AppCompatActivity {
     private Button qr_button,notice_button,map_button;
     private IntentIntegrator qrScan;
     private String userID;
     Intent intent;
+
     private AppBarConfiguration mAppBarConfiguration;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +82,7 @@ public class Main2Activity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send)
+                R.id.nav_home, R.id.nav_gallery)
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -74,10 +90,18 @@ public class Main2Activity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+
+
+
         intent =getIntent();
         TextView hi = (TextView)navigationView.getHeaderView(0).findViewById(R.id.user_place);//다른 xml 파일에 있는 TextView 건들기.
+
         userID=intent.getStringExtra("userID");
+
         hi.setText(userID+"님, 환영합니다!");
+
+
+
         qr_button =findViewById(R.id.Button_click);
         qrScan = new IntentIntegrator(this);
         // qrScan.setCaptureActivity(MainActivity.class);
@@ -127,9 +151,11 @@ public class Main2Activity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
 
-                    Intent intent =  getIntent();
-
+                    Calendar cal = new GregorianCalendar();
+                    Timestamp ts = new Timestamp(cal.getTimeInMillis());
                     final String userBarcode = result.getContents();
+
+
                     Response.Listener<String> responseListener = new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -151,10 +177,9 @@ public class Main2Activity extends AppCompatActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
                         }
                     };
-                    BarcodeRequest barcodeRequest = new BarcodeRequest(userID,userBarcode,responseListener);
+                    BarcodeRequest barcodeRequest = new BarcodeRequest(userID,userBarcode,ts,responseListener);
                     RequestQueue queue = Volley.newRequestQueue(Main2Activity.this);
                     queue.add(barcodeRequest);
 
@@ -165,7 +190,6 @@ public class Main2Activity extends AppCompatActivity {
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
-
 
     }
 
@@ -183,4 +207,5 @@ public class Main2Activity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 }
