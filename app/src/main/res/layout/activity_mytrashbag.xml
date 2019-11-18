@@ -7,20 +7,16 @@
     android:orientation="vertical"
     tools:context=".ui.gallery.mytrashbag">
 
-    <EditText
-        android:id="@+id/search_name"
+    <TextView
+        android:id="@+id/user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:ems="10"
-        android:inputType="textPersonName" />
-
-    <Button
-        android:id="@+id/search_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="검색" />
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:gravity="center_horizontal"
+        android:text="@string/nav_header_desc"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"/>
 
     <ListView
         android:id="@+id/my_list"
