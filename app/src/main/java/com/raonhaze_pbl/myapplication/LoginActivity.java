@@ -65,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                                 intent.putExtra("userID",userID);
                                 MyGlobals.getInstance().setData(userID);
                                 startActivity(intent);
+                                finish();
 
                             }
                             else //회원등록에 실패한 경우
@@ -82,5 +83,6 @@ public class LoginActivity extends AppCompatActivity {
                 queue.add(loginRequest);
             }
         });
+
     }
 }

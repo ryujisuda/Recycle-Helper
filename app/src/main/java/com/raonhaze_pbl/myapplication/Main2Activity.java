@@ -124,6 +124,7 @@ public class Main2Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.yeonsu.go.kr/main/part/clean/house.asp"));
                 startActivity(webIntent);
+                finish();
             }
         });
         map_button = findViewById(R.id.Button_map);

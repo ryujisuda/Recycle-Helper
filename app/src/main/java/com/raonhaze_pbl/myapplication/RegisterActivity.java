@@ -56,6 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),"회원 등록에 성공하였습니다.",Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
                                 startActivity(intent);
+                                finish();
                             }
                             else //회원등록에 실패한 경우
                             {
@@ -75,5 +76,6 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+
     }
 }
