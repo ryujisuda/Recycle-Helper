@@ -73,7 +73,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="73dp"
-            android:text="쓰레기봉투 등록" />
+            android:text="종량제봉투 등록" />
 
     </RelativeLayout>
     <include

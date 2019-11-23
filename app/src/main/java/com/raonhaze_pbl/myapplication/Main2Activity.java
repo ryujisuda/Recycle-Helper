@@ -1,6 +1,7 @@
 package com.raonhaze_pbl.myapplication;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
@@ -58,7 +60,7 @@ import java.util.GregorianCalendar;
 public class Main2Activity extends AppCompatActivity {
     private Button qr_button,notice_button,map_button;
     private IntentIntegrator qrScan;
-    private String userID;
+    private String userID,userPass;
     Intent intent;
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -95,9 +97,7 @@ public class Main2Activity extends AppCompatActivity {
 
         intent =getIntent();
         TextView hi = (TextView)navigationView.getHeaderView(0).findViewById(R.id.user_place);//다른 xml 파일에 있는 TextView 건들기.
-
         userID=intent.getStringExtra("userID");
-
         hi.setText(userID+"님, 환영합니다!");
 
 
@@ -194,6 +194,20 @@ public class Main2Activity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("알림");
+        builder.setMessage("앱을 종료하시겠습니까?");
+        builder.setNegativeButton("취소",null);
+        builder.setPositiveButton("종료", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                android.os.Process.killProcess(android.os.Process.myPid());
+            }
+        });
+        builder.show();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
