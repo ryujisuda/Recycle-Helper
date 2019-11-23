@@ -183,8 +183,6 @@ public class Main2Activity extends AppCompatActivity {
                     BarcodeRequest barcodeRequest = new BarcodeRequest(userID,userBarcode,ts,responseListener);
                     RequestQueue queue = Volley.newRequestQueue(Main2Activity.this);
                     queue.add(barcodeRequest);
-
-
                 }
             }
 
